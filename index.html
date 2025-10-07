@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>N745</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://ianlunn.github.io/Hover/css/hover.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Kanit", sans-serif;
+      font-size: 17px;
+      background-color: black;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    #myVideo {
+      position: fixed;
+      min-width: 100%;
+      min-height: 100%;
+      filter: blur(5px);
+    }
+
+    .img-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .ml13 {
+      font-size: 3em;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+      color: white;
+    }
+
+    .ml13 .letter {
+      display: inline-block;
+      line-height: 1em;
+    }
+
+    .content-social {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      padding: 20px;
+      text-align: center;
+    }
+
+    audio {
+      display: none;
+    }
+
+    /* ปุ่มควบคุมเสียง */
+    #toggle-audio {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid white;
+      border-radius: 30px;
+      padding: 10px 20px;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: background 0.3s, transform 0.2s;
+      z-index: 9999;
+    }
+
+    #toggle-audio:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.05);
+    }
+
+    .txt-rotate>.wrap {
+      border-right: 0.08em solid #666;
+    }
+  </style>
+</head>
+
+<body id="body">
+
+  <!-- เพลงพื้นหลัง -->
+  <audio id="bg-audio" autoplay muted loop>
+    <source src="https://cdn.discordapp.com/attachments/1346884717131337790/1389250198278115501/RUDE_-_Eternal_Youth.mp3?ex=6863ef92&is=68629e12&hm=97134bfa06e2b01b77d31b4a55bcc9702f0762573f6eab6b8910b426d84ac7bb&" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- ปุ่มควบคุมเสียง -->
+  <button id="toggle-audio">🔈 เปิดเสียง</button>
+
+  <div class="img-content">
+    <img src="https://img5.pic.in.th/file/secure-sv1/-_N_-.png" alt="Artist" style="width:200px; border-radius:100%;" class="hvr-bob">
+    <h1 class="ml13">
+      <span class="letter">N745</span>
+    </h1>
+    <center data-aos="fade-up" data-aos-delay="800" data-aos-duration="500">
+      <hr style="width: 14%; height: 5px; margin-top: 10px;">
+    </center>
+    <div data-aos="fade-up" data-aos-delay="1000" data-aos-duration="500">
+      <span class="txt-rotate" data-period="2000"
+        data-rotate='["DISCORD: Zettqueuex#8888","N7445'>
+        <span class="wrap">Welcome</span>
+      </span>
+    </div>
+  </div>
+
+  <div class="content-social">
+    <a href="#Zettqueuex" target="_blank" class="btn hvr-buzz"><i class="bi bi-github" style="color:white;font-size:2rem;"></i></a>
+    <a href="#" target="_blank" class="btn hvr-buzz"><i class="bi bi-facebook" style="color:white;font-size:2rem;"></i></a>
+    <a href="#" target="_blank" class="btn hvr-buzz"><i class="bi bi-discord" style="color:white;font-size:2rem;"></i></a>
+    <a href="#" class="btn hvr-buzz"><i class="bi bi-youtube" style="color:white;font-size:2rem;"></i></a>
+  </div>
+
+  <script>
+    AOS.init();
+
+    // Typewriter effect
+    var textWrapper = document.querySelector('.ml13');
+    textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+    anime.timeline({ loop: false }).add({
+      targets: '.ml13 .letter',
+      translateY: [100, 0],
+      opacity: [0, 1],
+      easing: "easeOutExpo",
+      duration: 1400,
+      delay: (el, i) => 300 + 30 * i
+    });
+
+    // Rotate text effect
+    var TxtRotate = function (el, toRotate, period) {
+      this.toRotate = toRotate;
+      this.el = el;
+      this.loopNum = 0;
+      this.period = parseInt(period, 10) || 2000;
+      this.txt = '';
+      this.tick();
+      this.isDeleting = false;
+    };
+
+    TxtRotate.prototype.tick = function () {
+      var i = this.loopNum % this.toRotate.length;
+      var fullTxt = this.toRotate[i];
+
+      this.txt = this.isDeleting
+        ? fullTxt.substring(0, this.txt.length - 1)
+        : fullTxt.substring(0, this.txt.length + 1);
+
+      this.el.innerHTML = '<span class="wrap">' + this.txt + '</span>';
+
+      var that = this;
+      var delta = 300 - Math.random() * 100;
+      if (this.isDeleting) delta /= 2;
+
+      if (!this.isDeleting && this.txt === fullTxt) {
+        delta = this.period;
+        this.isDeleting = true;
+      } else if (this.isDeleting && this.txt === '') {
+        this.isDeleting = false;
+        this.loopNum++;
+        delta = 500;
+      }
+
+      setTimeout(function () { that.tick(); }, delta);
+    };
+
+    window.onload = function () {
+      var elements = document.getElementsByClassName('txt-rotate');
+      for (var i = 0; i < elements.length; i++) {
+        var toRotate = elements[i].getAttribute('data-rotate');
+        var period = elements[i].getAttribute('data-period');
+        if (toRotate) new TxtRotate(elements[i], JSON.parse(toRotate), period);
+      }
+    };
+
+    // Background music control
+    const audio = document.getElementById('bg-audio');
+    const toggleBtn = document.getElementById('toggle-audio');
+    let isPlaying = false;
+
+    toggleBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        fadeOut(audio, 0.0, 2000);
+        isPlaying = false;
+        toggleBtn.textContent = '🔈 เปิดเสียง';
+      } else {
+        audio.muted = false;
+        fadeIn(audio, 1.0, 2000);
+        isPlaying = true;
+        toggleBtn.textContent = '🔇 ปิดเสียง';
+      }
+    });
+
+    document.addEventListener('click', () => {
+      if (!isPlaying) {
+        audio.muted = false;
+        fadeIn(audio, 1.0, 2000);
+        isPlaying = true;
+        toggleBtn.textContent = '🔇 ปิดเสียง';
+      }
+    }, { once: true });
+
+    function fadeIn(audio, targetVolume, duration) {
+      let vol = 0.0;
+      audio.volume = 0.0;
+      audio.play();
+      const interval = 50;
+      const step = (targetVolume - vol) / (duration / interval);
+      const fade = setInterval(() => {
+        vol += step;
+        if (vol >= targetVolume) {
+          audio.volume = targetVolume;
+          clearInterval(fade);
+        } else {
+          audio.volume = vol;
+        }
+      }, interval);
+    }
+
+    function fadeOut(audio, targetVolume, duration) {
+      let vol = audio.volume;
+      const interval = 50;
+      const step = (vol - targetVolume) / (duration / interval);
+      const fade = setInterval(() => {
+        vol -= step;
+        if (vol <= targetVolume) {
+          audio.volume = targetVolume;
+          audio.pause();
+          clearInterval(fade);
+        } else {
+          audio.volume = vol;
+        }
+      }, interval);
+    }
+  </script>
+</body>
+</html>
